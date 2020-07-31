@@ -1,0 +1,1 @@
+ninja: Entering directory `/home/nickli/doc/learn/jni/FFmpegNative/app/.cxx/cmake/debug/armeabi-v7a'

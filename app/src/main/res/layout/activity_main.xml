@@ -10,9 +10,15 @@
         android:id="@+id/sample_text"
         android:layout_width="match_parent"
         android:layout_height="240sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <jp.co.cyberagent.android.gpuimage.GPUImageView
+        android:layout_width="match_parent"
+        android:layout_height="240sp"
+        android:id="@+id/gpu_view"
+        app:layout_constraintTop_toBottomOf="@id/sample_text"
+        android:visibility="visible"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

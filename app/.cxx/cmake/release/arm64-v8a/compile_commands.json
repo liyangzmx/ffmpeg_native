@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/nickli/doc/learn/jni/FFmpegNative/app/.cxx/cmake/release/arm64-v8a",
+  "command": "/home/nickli/Android/Sdk/ndk/20.0.5594570/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --gcc-toolchain=/home/nickli/Android/Sdk/ndk/20.0.5594570/toolchains/llvm/prebuilt/linux-x86_64 --sysroot=/home/nickli/Android/Sdk/ndk/20.0.5594570/toolchains/llvm/prebuilt/linux-x86_64/sysroot  -Dnative_lib_EXPORTS -I/home/nickli/doc/learn/jni/FFmpegNative/app/src/main/cpp/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -fno-addrsig -Wa,--noexecstack -Wformat -Werror=format-security   -std=gnu++11 -O2 -DNDEBUG  -fPIC   -o CMakeFiles/native-lib.dir/native-lib.cpp.o -c /home/nickli/doc/learn/jni/FFmpegNative/app/src/main/cpp/native-lib.cpp",
+  "file": "/home/nickli/doc/learn/jni/FFmpegNative/app/src/main/cpp/native-lib.cpp"
+}
+]
