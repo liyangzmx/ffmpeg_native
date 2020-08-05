@@ -1,2 +1,7 @@
 ninja: Entering directory `/home/nickli/doc/learn/jni/FFmpegNative/app/.cxx/cmake/debug/arm64-v8a'
-ninja: no work to do.
+[1/2] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+/home/nickli/doc/learn/jni/FFmpegNative/app/src/main/cpp/native-lib.cpp:81:23: warning: ISO C++11 does not allow conversion from string literal to 'char *' [-Wwritable-strings]
+    char *file_name = "/sdcard/Download/test.mp4";
+                      ^
+1 warning generated.
+[2/2] Linking CXX shared library /home/nickli/doc/learn/jni/FFmpegNative/app/build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so
