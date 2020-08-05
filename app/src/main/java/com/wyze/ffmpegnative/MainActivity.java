@@ -18,6 +18,9 @@ import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.params.OutputConfiguration;
 import android.hardware.camera2.params.SessionConfiguration;
+import android.media.AudioFormat;
+import android.media.AudioManager;
+import android.media.AudioTrack;
 import android.media.Image;
 import android.media.ImageReader;
 import android.opengl.GLSurfaceView;
@@ -39,6 +42,9 @@ import java.util.List;
 
 import jp.co.cyberagent.android.gpuimage.GPUImage;
 import jp.co.cyberagent.android.gpuimage.GPUImageView;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImage3x3TextureSamplingFilter;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageColorInvertFilter;
+import jp.co.cyberagent.android.gpuimage.filter.GPUImageContrastFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageGrayscaleFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageSketchFilter;
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageSmoothToonFilter;
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     // Used to load the 'native-lib' library on application startup.
 
     static {
+        System.loadLibrary("fdk-aac");
+        System.loadLibrary("x264");
         System.loadLibrary("avutil");
         System.loadLibrary("swresample");
         System.loadLibrary("avformat");
@@ -176,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         gpuImage = new GPUImage(this);
 //        glSurfaceView = findViewById(R.id.gpu_view);
         gpuImageView = findViewById(R.id.gpu_view);
-        gpuImageView.setFilter(new GPUImageSketchFilter());
+        gpuImageView.setFilter(new GPUImageColorInvertFilter());
         gpuImageView.setRotation(Rotation.NORMAL);
         gpuImageView.setRenderMode(GPUImageView.RENDERMODE_CONTINUOUSLY);
 
@@ -306,6 +314,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private AudioTrack mAudioTrack;
+
+    public void createTrack(int sampleRateInHz, int nb_channels) {
+        int channelConfig;
+        if(nb_channels == 1) {
+            channelConfig = AudioFormat.CHANNEL_OUT_MONO;
+        } else if(nb_channels == 2) {
+            channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
+        } else {
+            channelConfig = AudioFormat.CHANNEL_OUT_MONO;
+        }
+        int bufferSize = AudioTrack.getMinBufferSize(sampleRateInHz, channelConfig, AudioFormat.ENCODING_PCM_16BIT);
+        mAudioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRateInHz, channelConfig,
+                AudioFormat.ENCODING_PCM_16BIT, bufferSize, AudioTrack.MODE_STREAM);
+        mAudioTrack.play();
+    }
+
+    public void playTrack(byte[] buffer, int lenght) {
+        if(mAudioTrack != null) {
+            mAudioTrack.write(buffer, 0, lenght);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopPlay();
+    }
+
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
@@ -313,4 +350,5 @@ public class MainActivity extends AppCompatActivity {
     public native String stringFromJNI();
     public native String GetFFmpegVersion();
     public native int setSurface(Surface surface);
+    public native void stopPlay();
 }
